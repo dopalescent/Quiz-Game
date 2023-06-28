@@ -14,11 +14,17 @@
     <h1>Quiz!</h1>
   </header>
 
-  <!-- <button id="test-button">Test</button> -->
+  <section id="start-page">
+    <a id="score-link">scoreboard</a>
+    <h2>GUESSWHATITSQUIZTIME</h2>
+      <p>It's time to quiz! Answer the questions as fast as you can! Careful though, get a question wrong and there's a 5-second penalty. Are you a real quizzer? Better find out!</p>
+      <button id="start-button">Start!</button>
+  </section>
 
-  <main id="quizpage">
+
+  <section id="quiz-page">
     <a id="timer">timer here</a>
-    <section>
+    <div>
       <h2 id="question-text">Question</h2>
       <ol>
         <li id="q1" class="clickable question">Answer 1</li>
@@ -27,10 +33,21 @@
         <li id="q4" class="clickable question">Answer 4</li>
       </ol>
       <a id="feedback"></a>
-    </section>
-  </main>
+    </div>
+    <button id="quiz-button">Next Question!</button>
+  </section>
 
-  <button id="next-button">Next Question!</button>
+  <section id="victory-page">
+    <h2 id="victory-text">Victory!</h2>
+    <button id="victory-button">Submit!</button>
+  </section>
+
+  <section id="score-page">
+    <div>
+      <a>scoreboard here</a>
+    </div>
+    <button id="score-button">Return!</button>
+  </section>
 
   <script src="./assets/js/script.js"></script>
 </body>
