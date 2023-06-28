@@ -26,8 +26,10 @@ var q3Ops = ['a3', 'b3', 'c3', 'd3'];
 var q4Ops = ['a4', 'b4', 'c4', 'd4'];
 var opsPool = [q1Ops, q2Ops, q3Ops, q4Ops];
 
+var timeLeft = 30;
 var attempted = false;
-var correct
+var penalty = false;
+var correct;
 var currentQuestion = 0;
 
 
@@ -42,6 +44,7 @@ function setQuiz() {
   startPage.setAttribute('style', 'display:none');
   quizPage.setAttribute('style', 'display:block');
   quizButton.setAttribute('style', 'display:none');
+  countdown();
   setUp();
 };
 
@@ -56,9 +59,30 @@ function setScore() {
   scorePage.setAttribute('style', 'display:block');
 };
 
+function countdown() {
+  var timeInterval = setInterval(function () {
+    timeLeft--;
+    timerEl.textContent = "Time Left: " + timeLeft + "s!";
+    if(penalty) {
+      timeLeft = timeLeft - 5;
+      penalty = false;      
+    }
+    if(timeLeft <= 0) {
+      clearInterval(timeInterval);
+      setVictory();
+      victoryText.textContent = "You failed! Tell the world!";
+      console.log("Failed!");
+    } else if(currentQuestion >= questions.length) {
+      clearInterval(timeInterval);
+      setVictory();
+      victoryText.textContent = "A quizzer is you!";
+      console.log(timeLeft);
+    }
+  }, 1000);
+}
+
 function setUp() {
   if(currentQuestion >= questions.length) {
-    setVictory();
     return;
   } else if(currentQuestion === questions.length - 1) {
     quizButton.textContent = "Finish!";
@@ -70,6 +94,7 @@ function setUp() {
   }
   correct = answerKey[currentQuestion];
   quizButton.setAttribute('style', 'display:none');
+  correct.textContent = "Correct";
 };
 
 function reset() {
@@ -99,9 +124,12 @@ function answer(event) {
   } else {
     event.target.setAttribute('style', 'color:white; background-color:red;');
     feedbackEl.textContent = "Nope!";
+    penalty = true;
   };
   quizButton.setAttribute('style', 'display:block');
 };
+
+
 
 setStart();
 
