@@ -1,15 +1,57 @@
-// var hideQuestions = document.querySelector("#questions");
-var testButton = document.querySelector("#test-button");
-
+// var hideoptions = document.querySelector("#options");
+var nextButton = document.querySelector("#next-button");
 var timerEl = document.getElementById('timer');
-var questions = document.querySelectorAll('li');
-var q1El = document.querySelector('#q1');
-var q2El = document.querySelector('#q2');
-var q3El = document.querySelector('#q3');
-var q4El = document.querySelector('#q4');
+var questionText = document.querySelector('#question-text')
+var options = document.querySelectorAll('li');
+var op1 = document.querySelector('#q1');
+var op2 = document.querySelector('#q2');
+var op3 = document.querySelector('#q3');
+var op4 = document.querySelector('#q4');
 var feedbackEl = document.querySelector('#feedback');
+
+var questions = ['Question 1', 'Question 2', 'Question 3', 'Question 4'];
+var answerKey = [op1, op3, op2, op4];
+var q1Ops = ['a1', 'b1', 'c1', 'd1'];
+var q2Ops = ['a2', 'b2', 'c2', 'd2'];
+var q3Ops = ['a3', 'b3', 'c3', 'd3'];
+var q4Ops = ['a4', 'b4', 'c4', 'd4'];
+var opsPool = [q1Ops, q2Ops, q3Ops, q4Ops];
+
 var attempted = false;
-var correct = q1El
+var correct
+var currentQuestion = 0;
+
+
+function setUp() {
+  if(currentQuestion >= questions.length){
+    feedbackEl.textContent = "Finished!"
+    return;
+  };
+  console.log(currentQuestion);
+  questionText.textContent = questions[currentQuestion];
+  var currentOps = opsPool[currentQuestion];
+  for (var i = 0; i < options.length; i++) {
+    options[i].textContent = currentOps[i];
+    console.log("setup read");
+  }
+  correct = answerKey[currentQuestion];
+  nextButton.setAttribute('style', 'display:none')
+}
+
+function reset() {
+  console.log("transition confirmed");
+  feedbackEl.textContent = "";
+  for (var i = 0; i < options.length; i++) {
+    options[i].setAttribute('style', 'color:black; background-color:none;');
+  }
+  attempted = false;
+  currentQuestion++
+};
+
+function nextQuestion() {
+  reset();
+  setUp();
+}
 
 function answer(event) {
   event.stopPropagation();
@@ -28,39 +70,24 @@ function answer(event) {
     event.target.setAttribute('style', 'color:white; background-color:red;')
     feedbackEl.textContent = "Nope!"
   }
+  nextButton.setAttribute('style', 'display:block')
 }
 
-function tester() {
-  console.log("test function called")
-  var nextTest = window.confirm("test transition?");
-  if (nextTest) {
-    console.log("transition confirmed");
-    q1El.textContent = "Changed!";
-    q2El.textContent = "Changed!";
-    q3El.textContent = "Changed!";
-    q4El.textContent = "Changed!";
-    feedbackEl.textContent = "";
-    for (var i = 0; i < questions.length; i++) {
-      questions[i].setAttribute('style', 'color:black; background-color:none;');
-    }
-    correct = q2El;
-    attempted = false;
-  }
-};
+setUp();
 
-q1El.addEventListener("click", answer);
-q2El.addEventListener("click", answer);
-q3El.addEventListener("click", answer);
-q4El.addEventListener("click", answer);
+nextButton.addEventListener("click", nextQuestion);
 
+op1.addEventListener("click", answer); 
+op2.addEventListener("click", answer);
+op3.addEventListener("click", answer);
+op4.addEventListener("click", answer);
 
-testButton.addEventListener("click", tester);
 
 // function tester() {
 //   console.log("test function called")
 //   var hideTest = window.confirm("hide?");
 //   if (hideTest) {
 //     console.log("hide confirmed");
-//     hideQuestions.setAttribute("style", "display:none");
+//     hideoptions.setAttribute("style", "display:none");
 //   }
 // };
