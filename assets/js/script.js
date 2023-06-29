@@ -45,6 +45,7 @@ function setStartPage() {
   timeLeft = 60;
   currentQuestion = 0;
   timerEl.textContent = "Time Left: 60s!";
+  quizButton.textContent = "Next Question!";
 };
 
 function setQuizPage() {
@@ -140,6 +141,7 @@ function postScoreboard() {
     scoreboard.removeChild(scoreboard.children[0]);
   }
 
+
   if(currentQuestion > 0) {
     var playerScore = {initials: initialsInput.value.trim(), score: timeLeft};
     scores.push(playerScore);
@@ -164,10 +166,16 @@ function postScoreboard() {
     liElement.textContent = scores[k].initials + " --- " + scores[k].score;
     scoreboard.appendChild(liElement);
   }
+
+  localStorage.setItem('scores', JSON.stringify(scores))
 };
 
 
 setStartPage();
+var storedScore = JSON.parse(localStorage.getItem('scores'));
+if (storedScore !== null) {
+  scores = storedScore;
+}
 
 startButton.addEventListener("click", setQuizPage);
 scoreLink.addEventListener("click", setScorePage);
