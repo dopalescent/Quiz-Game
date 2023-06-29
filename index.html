@@ -15,7 +15,7 @@
   </header>
 
   <section id="start-page">
-    <a id="score-link">scoreboard</a>
+    <button id="score-link">scoreboard</button>
     <h2>GUESSWHATITSQUIZTIME</h2>
       <p>It's time to quiz! Answer the questions as fast as you can! Careful though, get a question wrong and there's a 5-second penalty! Are you a real quizzer? Better find out!</p>
       <button id="start-button">Start!</button>
@@ -23,14 +23,14 @@
 
 
   <section id="quiz-page">
-    <a id="timer">timer here</a>
+    <a id="timer">Time Left: 60s!</a>
     <div>
-      <h2 id="question-text">Question</h2>
+      <h2 id="question-text"></h2>
       <ol>
-        <li id="q1" class="clickable question">Answer 1</li>
-        <li id="q2" class="clickable question">Answer 2</li>
-        <li id="q3" class="clickable question">Answer 3</li>
-        <li id="q4" class="clickable question">Answer 4</li>
+        <li id="q1" class="clickable question"></li>
+        <li id="q2" class="clickable question"></li>
+        <li id="q3" class="clickable question"></li>
+        <li id="q4" class="clickable question"></li>
       </ol>
       <a id="feedback"></a>
     </div>
@@ -41,14 +41,14 @@
     <h2 id="victory-text">Victory!</h2>
     <h3>Enter your initals below to memorialize your quizzing!</h3>
     <form id="form">
-      <input type="text" id="initals" placeholder="Initials!" />
+      <input type="text" id="initials" placeholder="Initials!" />
     </form>
     <button id="victory-button">Submit!</button>
   </section>
 
   <section id="score-page">
     <div>
-      <a>scoreboard here</a>
+      <ul id="scoreboard">Scoreboard!</ul>
     </div>
     <button id="score-button">Return!</button>
   </section>

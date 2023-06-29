@@ -5,8 +5,10 @@ var quizPage = document.querySelector('#quiz-page');
 var quizButton = document.querySelector("#quiz-button");
 var victoryPage = document.querySelector('#victory-page');
 var victoryText = document.querySelector('#victory-text');
+var initialsInput = document.querySelector('#initials');
 var victoryButton = document.querySelector('#victory-button');
 var scorePage = document.querySelector('#score-page');
+var scoreboard = document.querySelector('#scoreboard');
 var scoreButton = document.querySelector('#score-button');
 
 var timerEl = document.getElementById('timer');
@@ -25,22 +27,27 @@ var q2Ops = ['a2', 'b2', 'c2', 'd2'];
 var q3Ops = ['a3', 'b3', 'c3', 'd3'];
 var q4Ops = ['a4', 'b4', 'c4', 'd4'];
 var opsPool = [q1Ops, q2Ops, q3Ops, q4Ops];
+var scores = [];
 
-var timeLeft = 30;
-var attempted = false;
-var penalty = false;
 var correct;
+var attempted = false;
+var timeLeft;
+var penalty = false;
 var currentQuestion = 0;
+var scoreEntry = false;
 
 
-function setStart() {
+function setStartPage() {
   scorePage.setAttribute('style', 'display:none');
   startPage.setAttribute('style', 'display:block');
   quizPage.setAttribute('style', 'display:none');
   victoryPage.setAttribute('style', 'display:none');
+  timeLeft = 60;
+  currentQuestion = 0;
+  timerEl.textContent = "Time Left: 60s!";
 };
 
-function setQuiz() {
+function setQuizPage() {
   startPage.setAttribute('style', 'display:none');
   quizPage.setAttribute('style', 'display:block');
   quizButton.setAttribute('style', 'display:none');
@@ -48,12 +55,14 @@ function setQuiz() {
   setUp();
 };
 
-function setVictory() {
+function setVictoryPage() {
   quizPage.setAttribute('style', 'display:none');
   victoryPage.setAttribute('style', 'display:block');
 };
 
-function setScore() {
+function setScorePage() {
+  postScoreboard();
+
   startPage.setAttribute('style', 'display:none');
   victoryPage.setAttribute('style', 'display:none');
   scorePage.setAttribute('style', 'display:block');
@@ -69,14 +78,12 @@ function countdown() {
     }
     if(timeLeft <= 0) {
       clearInterval(timeInterval);
-      setVictory();
+      setVictoryPage();
       victoryText.textContent = "You failed! Tell the world!";
-      console.log("Failed!");
     } else if(currentQuestion >= questions.length) {
       clearInterval(timeInterval);
-      setVictory();
+      setVictoryPage();
       victoryText.textContent = "A quizzer is you!";
-      console.log(timeLeft);
     }
   }, 1000);
 }
@@ -99,8 +106,8 @@ function setUp() {
 
 function reset() {
   feedbackEl.textContent = "";
-  for (var i = 0; i < options.length; i++) {
-    options[i].setAttribute('style', 'color:black; background-color:none;');
+  for (var j = 0; j < options.length; j++) {
+    options[j].setAttribute('style', 'color:black; background-color:none;');
   };
   attempted = false;
   currentQuestion++;
@@ -114,7 +121,6 @@ function nextQuestion() {
 function answer(event) {
   event.stopPropagation();
   if(attempted) {
-    console.log("re-answer prevented");
     return;
   };
   attempted = true;
@@ -129,15 +135,45 @@ function answer(event) {
   quizButton.setAttribute('style', 'display:block');
 };
 
+function postScoreboard() {
+  while (scoreboard.children.length > 0) {
+    scoreboard.removeChild(scoreboard.children[0]);
+  }
+
+  if(currentQuestion > 0) {
+    var playerScore = {initials: initialsInput.value.trim(), score: timeLeft};
+    scores.push(playerScore);
+    initialsInput.value = "";
+  };
+
+  function sorter (a, b) {
+    var scoreA = a.score;
+    var scoreB = b.score;
+    if (scoreA > scoreB) {
+      return -1;
+    } else if (scoreA < scoreB) {
+      return 1;
+    } else {
+      return 0;
+    }
+  }
+  scores.sort(sorter);
+
+  for (var k = 0; k < scores.length; k++) {
+    var liElement = document.createElement('li');
+    liElement.textContent = scores[k].initials + " --- " + scores[k].score;
+    scoreboard.appendChild(liElement);
+  }
+};
 
 
-setStart();
+setStartPage();
 
-startButton.addEventListener("click", setQuiz);
-scoreLink.addEventListener("click", setScore);
+startButton.addEventListener("click", setQuizPage);
+scoreLink.addEventListener("click", setScorePage);
 quizButton.addEventListener("click", nextQuestion);
-victoryButton.addEventListener("click", setScore);
-scoreButton.addEventListener("click", setStart);
+victoryButton.addEventListener("click", setScorePage);
+scoreButton.addEventListener("click", setStartPage);
 
 op1.addEventListener("click", answer); 
 op2.addEventListener("click", answer);
