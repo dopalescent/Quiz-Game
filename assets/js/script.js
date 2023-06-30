@@ -20,12 +20,17 @@ var op3 = document.querySelector('#q3');
 var op4 = document.querySelector('#q4');
 var feedbackEl = document.querySelector('#feedback');
 
-var questions = ['Question 1', 'Question 2', 'Question 3', 'Question 4'];
-var answerKey = [op1, op3, op2, op4];
-var q1Ops = ['a1', 'b1', 'c1', 'd1'];
-var q2Ops = ['a2', 'b2', 'c2', 'd2'];
-var q3Ops = ['a3', 'b3', 'c3', 'd3'];
-var q4Ops = ['a4', 'b4', 'c4', 'd4'];
+var questions = [
+  'Question 1: Javascript is an_____language?', 
+  'Question 2: Which of the following will stop an interval timer in Javascript?', 
+  'Question 3: Which function is used to serialize an object in a JSON string in Javascript?', 
+  'Question 4: Which of the following keywords is used to define a variable in Javascript?'
+];
+var answerKey = [op2, op3, op1, op4];
+var q1Ops = ['Object-Based', 'Object-Oriented', 'Procedural', 'None of the above'];
+var q2Ops = ['stopTimer', 'clearTimer', 'clearInterval', 'intervalStop'];
+var q3Ops = ['stringify()', 'parse()', 'convert()', 'None of the above'];
+var q4Ops = ['set', 'def', 'val', 'var'];
 var opsPool = [q1Ops, q2Ops, q3Ops, q4Ops];
 var scores = [];
 
@@ -102,7 +107,6 @@ function setUp() {
   }
   correct = answerKey[currentQuestion];
   quizButton.setAttribute('style', 'display:none');
-  correct.textContent = "Correct";
 };
 
 function reset() {
@@ -140,7 +144,6 @@ function postScoreboard() {
   while (scoreboard.children.length > 0) {
     scoreboard.removeChild(scoreboard.children[0]);
   }
-
 
   if(currentQuestion > 0) {
     var playerScore = {initials: initialsInput.value.trim(), score: timeLeft};
