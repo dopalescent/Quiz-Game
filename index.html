@@ -14,40 +14,51 @@
     <h1>Quiz!</h1>
   </header>
 
+  <!-- Start Page -->
   <section id="start-page">
+    <!-- Link to score page from start page -->
     <button id="score-link">scoreboard</button>
     <h2>GUESSWHATITSQUIZTIME</h2>
       <p>It's time to quiz! Answer the JS fundamentals questions as fast as you can! Careful though, get a question wrong and there's a 5-second penalty! Are you a real quizzer? Better find out!</p>
       <button id="start-button">Start!</button>
   </section>
 
-
+  <!-- Quiz Page -->
   <section id="quiz-page">
+    <!-- Timer -->
     <a id="timer">Time Left: 60s!</a>
     <div>
+      <!-- Question text -->
       <h2 id="question-text"></h2>
       <ol>
+        <!-- Multiple choice answerss -->
         <li id="q1" class="clickable question"></li>
         <li id="q2" class="clickable question"></li>
         <li id="q3" class="clickable question"></li>
         <li id="q4" class="clickable question"></li>
       </ol>
+      <!-- Feedback section -->
       <a id="feedback"></a>
     </div>
+    <!-- Next Question/ Finish Button -->
     <button id="quiz-button">Next Question!</button>
   </section>
 
+  <!-- Victory Page -->
   <section id="victory-page">
     <h2 id="victory-text">Victory!</h2>
     <h3>Enter your initals below to memorialize your quizzing!</h3>
+    <!-- Entry field for initials -->
     <form id="form">
       <input type="text" id="initials" placeholder="Initials!" />
     </form>
     <button id="victory-button">Submit!</button>
   </section>
 
+  <!-- Score Page -->
   <section id="score-page">
     <div>
+      <!-- Scoreboard -->
       <ul id="scoreboard">Scoreboard!</ul>
     </div>
     <button id="score-button">Return!</button>
